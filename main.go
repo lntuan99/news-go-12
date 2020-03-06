@@ -11,6 +11,7 @@ import (
 	"math"
 	"net/http"
 	"net/url"
+	"os"
 	"strconv"
 )
 
@@ -35,6 +36,11 @@ func getApiKey() *string {
 }
 
 func runServer() {
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "3000"
+	}
+
 	apiKey = getApiKey()
 	mux := http.NewServeMux()
 
@@ -44,7 +50,7 @@ func runServer() {
 
 	mux.HandleFunc("/", indexHandler)
 	mux.HandleFunc("/search", searchHandler)
-	http.ListenAndServe(":3000", mux)
+	http.ListenAndServe(":"+port, mux)
 }
 
 func searchHandler(w http.ResponseWriter, r *http.Request) {
