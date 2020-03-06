@@ -1,0 +1,3 @@
+module github.com/LNT-12/news-go
+
+go 1.13.7
